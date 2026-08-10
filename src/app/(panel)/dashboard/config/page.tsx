@@ -12,6 +12,7 @@ interface ConfigData {
     currency: string;
     test_event_code: string;
     webhook_token_mask: string | null;
+    webhook_domain: string | null;
   };
   pixels: AccountRow[];
   ga4: AccountRow[];
@@ -27,7 +28,7 @@ async function loadConfig(): Promise<ConfigData> {
   const [settingsRes, ga4Res, pixelRes, adRes, products] = await Promise.all([
     supabase
       .from("settings")
-      .select("webhook_token_mask, currency, test_event_code")
+      .select("webhook_token_mask, currency, test_event_code, webhook_domain")
       .eq("id", 1)
       .single(),
     supabase
@@ -50,6 +51,7 @@ async function loadConfig(): Promise<ConfigData> {
       currency: settingsRes.data?.currency ?? "BRL",
       test_event_code: settingsRes.data?.test_event_code ?? "",
       webhook_token_mask: settingsRes.data?.webhook_token_mask ?? null,
+      webhook_domain: settingsRes.data?.webhook_domain ?? null,
     },
     ga4: (ga4Res.data ?? []).map((r) => ({
       id: r.id,

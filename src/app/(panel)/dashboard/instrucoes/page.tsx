@@ -406,12 +406,15 @@ export default function InstrucoesPage() {
       <Step id="webhook" n={8} title="Webhook de compra na plataforma">
         <OL>
           <li>
-            No painel, vá em <strong>Configurações → Geral</strong>, clique em{" "}
-            <strong>Gerar</strong> no campo do token do webhook e salve. Copie o
-            token antes de sair da tela.
+            No painel, vá em <strong>Configurações → Geral</strong> e preencha o{" "}
+            <strong>domínio do sistema</strong> — o mesmo que você ligou na
+            Vercel, por exemplo <code>dados.seudominio.com</code>.
           </li>
           <li>
-            Copie a URL do webhook (o painel mostra pronta na mesma tela):
+            Clique em <strong>Gerar</strong> no campo do token. A{" "}
+            <strong>URL completa já aparece montada</strong> logo abaixo, com o
+            token dentro — é só clicar em copiar. Salve antes de sair da tela:
+            depois disso o token não é mais exibido.
             <WebhookUrlBlock />
           </li>
           <li>

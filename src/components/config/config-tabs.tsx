@@ -23,6 +23,7 @@ export function ConfigTabs({
     currency: string;
     test_event_code: string;
     webhook_token_mask: string | null;
+    webhook_domain: string | null;
   };
   pixels: AccountRow[];
   ga4: AccountRow[];

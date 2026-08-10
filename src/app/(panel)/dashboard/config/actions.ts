@@ -15,6 +15,7 @@ import { sha256 } from "@/lib/hash";
 import { maskSecret, sanitizeSecret } from "@/lib/mask";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
+import { normalizeDomain } from "@/lib/webhook/domain";
 
 const CONFIG_PATH = "/dashboard/config";
 
@@ -104,10 +105,15 @@ export async function saveSettings(
     const currency = String(formData.get("currency") ?? "BRL").trim() || "BRL";
     const testEventCode = sanitizeSecret(formData.get("test_event_code") as string);
     const webhookToken = sanitizeSecret(formData.get("webhook_token") as string);
+    // Normaliza igual ao formulário: guardamos só o host (sem protocolo/caminho).
+    const webhookDomain = normalizeDomain(
+      formData.get("webhook_domain") as string,
+    );
 
     const update: Record<string, unknown> = {
       currency,
       test_event_code: testEventCode || null,
+      webhook_domain: webhookDomain || null,
     };
     if (webhookToken) {
       update.webhook_token_enc = await encrypt(admin, webhookToken);

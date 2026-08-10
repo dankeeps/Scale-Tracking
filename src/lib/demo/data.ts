@@ -866,6 +866,7 @@ export interface DemoConfig {
     currency: string;
     test_event_code: string;
     webhook_token_mask: string | null;
+    webhook_domain: string | null;
   };
   pixels: AccountRow[];
   ga4: AccountRow[];
@@ -886,6 +887,7 @@ export function config(): DemoConfig {
       currency: "BRL",
       test_event_code: "TEST00000",
       webhook_token_mask: "demo…0000",
+      webhook_domain: "dados.seudominio.com",
     },
     pixels: [acc("demo-pixel", "Pixel principal (exemplo)", "123456789012345", "EAAG…demo")],
     ga4: [acc("demo-ga4", "Propriedade GA4 (exemplo)", "G-XXXXXXXXXX", "abcd…demo")],

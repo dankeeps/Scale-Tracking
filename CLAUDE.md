@@ -178,6 +178,11 @@ npm start       # servir o build
   `config/actions.ts` que checam `getUser()` e gravam via **admin (service_role)**.
 - Segredos: cifrados com a RPC `encrypt_secret` (a coluna `bytea` recebe a string
   `\x…` de volta pelo client — validado); máscara calculada em `src/lib/mask.ts`.
+- **Webhook**: a aba Geral tem o campo `webhook_domain` (host onde o sistema está
+  publicado, ex.: `dados.seudominio.com`). Ele + o token recém-gerado montam a
+  **URL completa** na tela (`src/lib/webhook/domain.ts`, usado pelo form e pela
+  action) — a pessoa só copia. O token só aparece no momento em que é gerado (no
+  banco fica cifrado), então o formulário NÃO limpa o campo após salvar.
 - "Testar conexão": Pixel → CAPI test event (usa `test_event_code`); GA4 → debug
   do Measurement Protocol; Ad account → nó `act_<id>` (fields=name). Decifra o
   segredo via `decrypt_secret` (service_role) só na hora do teste/disparo.

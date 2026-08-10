@@ -72,7 +72,7 @@ export function WebhookUrlBlock() {
   const origin = useOrigin() || "https://SEU-DOMINIO.com";
   return (
     <CopyBlock
-      caption="URL para cadastrar na plataforma de venda (troque <TOKEN> pelo token gerado):"
+      caption="Formato da URL — o painel já monta ela pronta, com o token, para você copiar:"
       code={`${origin}${WEBHOOK_COMPRA_PATH}?token=<TOKEN>`}
     />
   );
