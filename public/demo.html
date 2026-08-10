@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demo do tracker</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 640px;
+        margin: 40px auto;
+        padding: 0 16px;
+        background: #0a0a0a;
+        color: #e5e7eb;
+      }
+      button {
+        background: #3b82f6;
+        color: #fff;
+        border: 0;
+        border-radius: 8px;
+        padding: 10px 16px;
+        font-size: 14px;
+        cursor: pointer;
+        margin: 4px 4px 4px 0;
+      }
+      code {
+        background: #111827;
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+      #log {
+        white-space: pre-wrap;
+        background: #111827;
+        border-radius: 8px;
+        padding: 12px;
+        font-family: ui-monospace, monospace;
+        font-size: 12px;
+        min-height: 80px;
+      }
+      a {
+        color: #60a5fa;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Demo do tracker</h1>
+    <p>trck_user_id atual: <code id="id">—</code></p>
+
+    <button onclick="fireLead()">Disparar evento "Lead"</button>
+    <button onclick="firePurchase()">Simular "Purchase" (R$ 197)</button>
+    <button onclick="showLink()">Gerar link de checkout (cross-domain)</button>
+
+    <p><a id="checkout" href="#" target="_blank"></a></p>
+
+    <h3>Log</h3>
+    <div id="log"></div>
+
+    <script>
+      function log(msg) {
+        document.getElementById("log").textContent +=
+          new Date().toLocaleTimeString() + "  " + msg + "\n";
+      }
+      function refreshId() {
+        document.getElementById("id").textContent =
+          (window.trck && window.trck.getId()) || "—";
+      }
+      async function fireLead() {
+        const r = await window.trck.track("Lead");
+        log("Lead → " + JSON.stringify(r));
+        refreshId();
+      }
+      async function firePurchase() {
+        const r = await window.trck.track("Purchase", {
+          value: 197.0,
+          currency: "BRL",
+          content_name: "Curso Demo",
+          content_ids: ["curso-demo"],
+          content_type: "product",
+        });
+        log("Purchase → " + JSON.stringify(r));
+      }
+      function showLink() {
+        const url = window.trck.decorate(
+          "https://checkout.exemplo.com/comprar",
+        );
+        const a = document.getElementById("checkout");
+        a.href = url;
+        a.textContent = url;
+        log("Link: " + url);
+      }
+      // Atualiza o id assim que o tracker inicializar.
+      setTimeout(refreshId, 1200);
+    </script>
+
+    <!-- carrega o tracker (mesma origem no dev) -->
+    <script async src="/t.js"></script>
+  </body>
+</html>
