@@ -14,6 +14,18 @@ Painel autenticado com visão geral, eventos, faturamento, campanhas (ROAS/CPA) 
 - UI shadcn/Radix · Recharts · d3-geo · sonner
 - **Meta Graph API v25** · **GA4 Measurement Protocol**
 
+## Ver funcionando (sem configurar nada)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdankeeps%2FScale-Tracking&project-name=scale-tracking&repository-name=scale-tracking)
+
+Sem variáveis de ambiente, o sistema sobe em **modo demonstração**: painel aberto
+sem login, com dados fictícios em todas as abas. Dá para clicar em tudo — visão
+geral, campanhas, vendas, eventos, mapa — e ler a aba **Instruções** com o passo
+a passo de ativação. Nenhum dado é gravado.
+
+> Não roda em GitHub Pages: o projeto tem rotas de API, Server Actions e proxy de
+> sessão — precisa de servidor, não de arquivos estáticos.
+
 ## Template para duplicar
 
 O repositório é um **template**: um projeto por especialista/cliente, cada um com
