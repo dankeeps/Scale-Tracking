@@ -119,21 +119,18 @@ export function SettingsForm({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="webhook_token">Token do webhook</Label>
+            <Label htmlFor="webhook_url">
+              URL do webhook — copie e cole na plataforma de venda
+            </Label>
+            {/* O token viaja escondido: na tela só existe a URL pronta. */}
+            <input type="hidden" name="webhook_token" value={webhookToken} />
             <div className="flex gap-2">
               <Input
-                id="webhook_token"
-                name="webhook_token"
-                type="text"
-                value={webhookToken}
-                onChange={(e) => setWebhookToken(e.target.value)}
-                placeholder={
-                  settings.webhook_token_mask
-                    ? `atual: ${settings.webhook_token_mask} — deixe em branco para manter`
-                    : "clique em Gerar"
-                }
-                autoComplete="off"
-                className="font-mono"
+                id="webhook_url"
+                readOnly
+                value={webhookUrl}
+                placeholder="preencha o domínio acima"
+                className="font-mono text-xs"
               />
               <Button
                 type="button"
@@ -144,23 +141,11 @@ export function SettingsForm({
                 <RefreshCw className="size-4" />
                 Gerar
               </Button>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>URL do webhook — copie e cole na plataforma de venda</Label>
-            <div className="flex gap-2">
-              <Input
-                readOnly
-                value={webhookUrl}
-                placeholder="preencha o domínio acima"
-                className="font-mono text-xs"
-              />
               <Button
                 type="button"
                 variant="outline"
                 onClick={copyUrl}
-                disabled={!webhookUrl}
+                disabled={!hasToken || !webhookUrl}
                 className="shrink-0"
                 aria-label="Copiar URL do webhook"
               >
@@ -177,15 +162,15 @@ export function SettingsForm({
                 <TriangleAlert className="mt-0.5 size-3.5 shrink-0" />
                 <span>
                   Clique em <strong>Salvar</strong> e copie esta URL agora. O
-                  token é cifrado no banco: ao sair desta tela ele não é exibido
-                  de novo — só dá para gerar outro.
+                  token dentro dela é cifrado no banco: ao sair desta tela não é
+                  exibido de novo — só dá para gerar outro.
                 </span>
               </p>
             ) : (
               <p className="text-xs text-muted-foreground">
                 {settings.webhook_token_mask
-                  ? "Já existe um token salvo, mas ele não pode ser exibido de novo. Clique em Gerar para criar um novo (e atualize a URL na plataforma)."
-                  : "Clique em Gerar acima e a URL completa, já com o token, aparece aqui."}
+                  ? `Já existe um token salvo (${settings.webhook_token_mask}), mas ele não pode ser exibido de novo. Clique em Gerar para criar outro — e atualize a URL na plataforma de venda.`
+                  : "Clique em Gerar e a URL completa, já com o token, aparece aqui pronta para copiar."}
               </p>
             )}
           </div>
